@@ -1,3 +1,5 @@
+//form/TaxForm.client.js
+
 "use client";
 
 import { useState } from "react";
@@ -6,6 +8,10 @@ import { createClient } from "@supabase/supabase-js"; // Import Supabase client
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error("Supabase URL and Anon Key are required.");
+}
 
 export default function TaxForm() {
   const [formData, setFormData] = useState({
