@@ -3,12 +3,19 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-4">Welcome to Tax Details App</h1>
-      <Link href="/form" className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700">
-          Proceed to Tax Details Form
-        
-      </Link>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="container w-11/12 max-w-md shadow-md rounded-xl overflow-hidden bg-white p-6">
+        <h1 className="text-4xl text-black text-center mb-6">Welcome to the Tax Submission App</h1>
+        <p className="text-lg text-gray-600 mb-6 text-center">
+          Easily submit your tax details and documents securely.
+        </p>
+
+        <div className="flex justify-center">
+          <Link href="/form" className="bg-green-600 justify-center text-white py-3 px-5 rounded font-medium text-lg cursor-pointer transition-colors duration-300 hover:bg-green-700">
+            Proceed to Tax Details Form
+          </Link>
+        </div>
+      </div>
     </div>
   );
-}
+};

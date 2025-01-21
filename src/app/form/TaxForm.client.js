@@ -140,58 +140,64 @@ export default function TaxForm() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-6">Tax Details Form</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {Object.keys(formData).map((field) => (
-          <div key={field}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="container w-11/12 max-w-4xl shadow-md rounded-xl overflow-hidden bg-white mx-auto p-10">
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Tax Details Form
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {Object.keys(formData).map((field) => (
+            <div key={field}>
+              <label className="block text-sm font-medium">
+                {transformLabel(field)}
+              </label>
+              <input
+                type="text"
+                name={field}
+                value={formData[field]}
+                onChange={handleInputChange}
+                required
+                className="w-full p-2 border rounded"
+              />
+            </div>
+          ))}
+          <div>
             <label className="block text-sm font-medium">
-              {transformLabel(field)}
+              Upload Documents
             </label>
             <input
-              type="text"
-              name={field}
-              value={formData[field]}
-              onChange={handleInputChange}
-              required
+              type="file"
+              multiple
+              onChange={handleFileChange}
               className="w-full p-2 border rounded"
             />
           </div>
-        ))}
-        <div>
-          <label className="block text-sm font-medium">Upload Documents</label>
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            className="w-full p-2"
-          />
-        </div>
-        <div className="file-list mt-4">
-          {files.map((file, index) => (
-            <div
-              key={index}
-              className="file-item flex items-center justify-between p-2 border rounded mb-2"
-            >
-              <span>{file.name}</span>
-              <button
-                type="button"
-                className="remove-file text-red-500"
-                onClick={() => removeFile(index)}
+          <div className="file-list mt-4">
+            {files.map((file, index) => (
+              <div
+                key={index}
+                className="file-item flex items-center justify-between p-2 border rounded mb-2"
               >
-                X
-              </button>
-            </div>
-          ))}
-        </div>
-        <button
-          type="submit"
-          className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
-          disabled={loading} // Disable the button while loading
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </button>
-      </form>
+                <span>{file.name}</span>
+                <button
+                  type="button"
+                  className="remove-file text-red-500"
+                  onClick={() => removeFile(index)}
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 bg-green-600 text-white rounded font-medium text-lg cursor-pointer transition-colors duration-300 hover:bg-green-700"
+            disabled={loading} // Disable the button while loading
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
