@@ -1,5 +1,3 @@
-//form/TaxForm.client.js
-
 "use client";
 
 import { useState } from "react";
@@ -25,6 +23,7 @@ export default function TaxForm() {
   });
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false); // Track submission success
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -124,6 +123,7 @@ export default function TaxForm() {
         });
         setFiles([]);
         setLoading(false); // Set loading to false after successful submission
+        setSubmissionSuccess(true); // Set submission success to true
       }
     } catch (err) {
       console.error("Error:", err);
@@ -145,58 +145,72 @@ export default function TaxForm() {
         <h1 className="text-2xl font-bold mb-6 text-center">
           Tax Details Form
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {Object.keys(formData).map((field) => (
-            <div key={field}>
+        {submissionSuccess ? (
+          <div className="text-center">
+            <p className="text-lg text-green-600 mb-4">
+              Submission successful!
+            </p>
+            <button
+              className="px-6 py-3 bg-blue-600 text-white rounded font-medium text-lg cursor-pointer transition-colors duration-300 hover:bg-blue-700"
+              onClick={() => (window.location.href = "/")}
+            >
+              Back to Home
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {Object.keys(formData).map((field) => (
+              <div key={field}>
+                <label className="block text-sm font-medium">
+                  {transformLabel(field)}
+                </label>
+                <input
+                  type="text"
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            ))}
+            <div>
               <label className="block text-sm font-medium">
-                {transformLabel(field)}
+                Upload Documents
               </label>
               <input
-                type="text"
-                name={field}
-                value={formData[field]}
-                onChange={handleInputChange}
-                required
+                type="file"
+                multiple
+                onChange={handleFileChange}
                 className="w-full p-2 border rounded"
               />
             </div>
-          ))}
-          <div>
-            <label className="block text-sm font-medium">
-              Upload Documents
-            </label>
-            <input
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div className="file-list mt-4">
-            {files.map((file, index) => (
-              <div
-                key={index}
-                className="file-item flex items-center justify-between p-2 border rounded mb-2"
-              >
-                <span>{file.name}</span>
-                <button
-                  type="button"
-                  className="remove-file text-red-500"
-                  onClick={() => removeFile(index)}
+            <div className="file-list mt-4">
+              {files.map((file, index) => (
+                <div
+                  key={index}
+                  className="file-item flex items-center justify-between p-2 border rounded mb-2"
                 >
-                  X
-                </button>
-              </div>
-            ))}
-          </div>
-          <button
-            type="submit"
-            className="w-full py-3 bg-green-600 text-white rounded font-medium text-lg cursor-pointer transition-colors duration-300 hover:bg-green-700"
-            disabled={loading} // Disable the button while loading
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
-        </form>
+                  <span>{file.name}</span>
+                  <button
+                    type="button"
+                    className="remove-file text-red-500"
+                    onClick={() => removeFile(index)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 bg-green-600 text-white rounded font-medium text-lg cursor-pointer transition-colors duration-300 hover:bg-green-700"
+              disabled={loading} // Disable the button while loading
+            >
+              {loading ? "Submitting..." : "Submit"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

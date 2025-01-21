@@ -1,9 +1,11 @@
-// page.js
-import dynamic from "next/dynamic";
+"use client";
 
-// Dynamically import the TaxForm component
-const TaxForm = dynamic(() => import("./TaxForm.client"));
+import TaxForm from "./TaxForm.client";
 
-export default function Page() {
-  return <TaxForm />;
+export default function FormPage() {
+  return (
+    <div>
+      <TaxForm />
+    </div>
+  );
 }
