@@ -1,6 +1,4 @@
-// pages/_document.js
-import { Html, Head, Main, NextScript } from "next/document";
-import Document from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
   render() {
@@ -9,7 +7,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/icons/icon-192x192.png" />
-          <meta name="theme-color" content="#000000" />
+          <meta name="theme-color" content="#317EFB" />
         </Head>
         <body>
           <Main />
