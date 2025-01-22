@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js"; // Import Supabase client
+import { v4 as uuidv4 } from "uuid"; // Import UUID to generate unique file names
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -71,10 +72,10 @@ export default function TaxForm() {
 
       // Upload each file to Supabase storage bucket
       for (const file of files) {
-        const sanitizedFileName = file.name.replace(/ /g, "_");
+        const uniqueFileName = `${uuidv4()}_${file.name.replace(/ /g, "_")}`;
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from("documents")
-          .upload(`${sanitizedFileName}`, file, {
+          .upload(uniqueFileName, file, {
             cacheControl: "3600",
             upsert: false,
           });
@@ -86,7 +87,7 @@ export default function TaxForm() {
           return;
         }
 
-        const fileUrl = `${SUPABASE_URL}/storage/v1/object/public/documents/${sanitizedFileName}`;
+        const fileUrl = `${SUPABASE_URL}/storage/v1/object/public/documents/${uniqueFileName}`;
         uploadedFilesUrls.push(fileUrl);
       }
 
@@ -158,7 +159,7 @@ export default function TaxForm() {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 mt-8">
             {Object.keys(formData).map((field) => (
               <div key={field}>
                 <label className="block text-sm font-medium">

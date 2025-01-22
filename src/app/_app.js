@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { createClient } from "@supabase/supabase-js";
+import { Workbox } from "workbox-window"; // Import Workbox for service worker registration
 
 // Initialize the Supabase client
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -41,6 +42,13 @@ function MyApp({ Component, pageProps }) {
       authListener?.unsubscribe();
     };
   }, [router]);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      const wb = new Workbox("/sw.js");
+      wb.register();
+    }
+  }, []);
 
   if (loading) return <div>Loading...</div>;
 
