@@ -1,7 +1,7 @@
 {
-  "name": "Tax Details PWA",
-  "short_name": "TaxPWA",
-  "description": "A PWA for submitting tax details.",
+  "name": "Tax Details App",
+  "short_name": "TaxApp",
+  "description": "An app for submitting tax details.",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
